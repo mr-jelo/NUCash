@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_white_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/navigation_inbox"
+        android:icon="@drawable/ic_white_mail"
+        android:title="Inbox" />
+    <item
+        android:id="@+id/navigation_qr_dummy"
+        android:enabled="false"
+        android:title="QR" />
+    <item
+        android:id="@+id/navigation_help"
+        android:icon="@drawable/ic_white_info"
+        android:title="Help" />
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_white_profile"
+        android:title="Profile" />
+</menu>
