@@ -23,20 +23,20 @@ public class RequestDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_details);
+        setContentView(R.layout.activity_request_details);
 
         recipientTextView = findViewById(R.id.recipientTextView);
         studentIdTextView = findViewById(R.id.studentIdTextView);
         amountTextView = findViewById(R.id.amountTextView);
         messageTextView = findViewById(R.id.messageTextView);
 
-        sendButton = findViewById(R.id.send_next);
+        sendButton = findViewById(R.id.request_next);
         confirmCheckbox = findViewById(R.id.confirmCheckbox);
 
         // Disable send button initially
         sendButton.setEnabled(false);
 
-        // Set onClickListener for the back button
+
         findViewById(R.id.backButton).setOnClickListener(v -> {
             startActivity(new Intent(RequestDetailsActivity.this, RequestMoneyActivity.class));
             finish();
@@ -51,7 +51,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
 
         recipientTextView.setText(recipient);
         studentIdTextView.setText(studentId);
-        amountTextView.setText(amount);
+        amountTextView.setText("₱ " +amount);
         messageTextView.setText(message);
 
         // Enable send button based on checkbox status
@@ -60,14 +60,13 @@ public class RequestDetailsActivity extends AppCompatActivity {
         });
 
         // Set button text to a static value
-        sendButton.setText("Send");
+        sendButton.setText("Request");
 
-        // Set OnClickListener for the send button
+
         sendButton.setOnClickListener(v -> {
-            // Display toast message
             Toast.makeText(RequestDetailsActivity.this, "Transaction Complete", Toast.LENGTH_SHORT).show();
 
-            // Redirect to HomeFragment
+
             Intent intentToHome = new Intent(RequestDetailsActivity.this, MainActivity.class);
             intentToHome.putExtra("redirectToHome", true); // Pass data to identify home redirection
             startActivity(intentToHome);

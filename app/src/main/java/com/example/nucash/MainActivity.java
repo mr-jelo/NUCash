@@ -21,24 +21,21 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         ImageButton qrButton = findViewById(R.id.qrButton);
 
-        // Check if this activity was started with the intent to redirect to HomeFragment
+
         boolean redirectToHome = getIntent().getBooleanExtra("redirectToHome", false);
 
         if (redirectToHome) {
-            // Load HomeFragment if redirected from SendDetailsActivity
             loadFragment(new HomeFragment());
         } else {
-            // Load the default fragment (HomeFragment) when the activity starts
             loadFragment(new HomeFragment());
         }
 
-        // Handle bottom navigation item clicks
+        // Handle bottom navigation item
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
 
-                // Use if-else statements instead of switch-case for each navigation item
                 if (item.getItemId() == R.id.navigation_home) {
                     selectedFragment = new HomeFragment();
                 } else if (item.getItemId() == R.id.navigation_inbox) {
@@ -58,11 +55,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Handle QR button click
         qrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Logic for handling the QR button click (e.g., launching QR scanner)
             }
         });
     }

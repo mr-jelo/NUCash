@@ -94,25 +94,25 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         // You can use a placeholder for now or set your drawable based on conditions
         switch (childText) {
             case "BPI":
-                imageView.setImageResource(R.drawable.ic_bills); // Replace with actual drawable
+                imageView.setImageResource(R.drawable.ic_bills);
                 break;
             case "UnionBank":
-                imageView.setImageResource(R.drawable.ic_bills); // Replace with actual drawable
+                imageView.setImageResource(R.drawable.ic_bills);
                 break;
             case "AUB":
-                imageView.setImageResource(R.drawable.ic_bills); // Replace with actual drawable
+                imageView.setImageResource(R.drawable.ic_bills);
                 break;
             case "Bank of China":
-                imageView.setImageResource(R.drawable.ic_bills); // Replace with actual drawable
+                imageView.setImageResource(R.drawable.ic_bills);
                 break;
             case "Bank of Commerce":
-                imageView.setImageResource(R.drawable.ic_bills); // Replace with actual drawable
+                imageView.setImageResource(R.drawable.ic_bills);
                 break;
             case "BDO":
-                imageView.setImageResource(R.drawable.ic_bills); // Replace with actual drawable
+                imageView.setImageResource(R.drawable.ic_bills);
                 break;
             default:
-                imageView.setImageResource(R.drawable.ic_bills); // Default drawable
+                imageView.setImageResource(R.drawable.ic_bills);
                 break;
         }
 

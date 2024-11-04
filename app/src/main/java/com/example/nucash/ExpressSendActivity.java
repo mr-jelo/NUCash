@@ -1,6 +1,8 @@
 package com.example.nucash;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,9 +20,12 @@ public class ExpressSendActivity extends AppCompatActivity {
     private EditText recipientEditText;
     private TextView charCountTextView;
     private Button sendNextButton;
-    private TextView errorTextView; // Add this for error message
-    private TextView accountNotFoundTextView; // New TextView for account not found message
-    private double currentBalance = 1300.45; // Set your current balance here
+    private TextView errorTextView;
+    private TextView accountNotFoundTextView;
+    private double currentBalance;
+    private SharedPreferences sharedPreferences;
+    private static final String PREFS_NAME = "NUCashPrefs";
+    private static final String WALLET_BALANCE_KEY = "wallet_balance";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +37,24 @@ public class ExpressSendActivity extends AppCompatActivity {
         recipientEditText = findViewById(R.id.recipientEditText);
         charCountTextView = findViewById(R.id.charCountTextView);
         sendNextButton = findViewById(R.id.send_next);
-        errorTextView = findViewById(R.id.errorTextView); // Initialize error TextView
-        accountNotFoundTextView = findViewById(R.id.accountNotFoundTextView); // Initialize account not found TextView
+        errorTextView = findViewById(R.id.errorTextView);
+        accountNotFoundTextView = findViewById(R.id.accountNotFoundTextView);
 
-        // Initially disable the Next button
+        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String balanceString = sharedPreferences.getString(WALLET_BALANCE_KEY, "₱ 0.00");
+        currentBalance = parseBalance(balanceString);
+        TextView currentBalanceTextView = findViewById(R.id.currentBalanceTextView);
+
+        currentBalanceTextView.setText("₱" + String.format("%.2f", currentBalance));
+
         sendNextButton.setEnabled(false);
 
-        // Set up character limit for message EditText
         messageEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int charCount = s.length();
-                charCountTextView.setText(charCount + "/100");
+                charCountTextView.setText(s.length() + "/100");
                 validateInputs();
             }
             @Override
@@ -56,33 +65,26 @@ public class ExpressSendActivity extends AppCompatActivity {
             }
         });
 
-        // Handle send_next button click
         sendNextButton.setOnClickListener(v -> {
             if (validateInputs()) {
-                Intent intent = new Intent(ExpressSendActivity.this, SendDetailsActivity.class);
-                intent.putExtra("amount", amountEditText.getText().toString());
-                intent.putExtra("message", messageEditText.getText().toString());
-
-                // Find the student ID based on the recipient name or ID input
                 String recipientInput = recipientEditText.getText().toString().trim();
                 String studentId = null;
                 String studentName = null;
 
                 for (Student student : StudentData.getStudentList()) {
-                    if (student.name.equalsIgnoreCase(recipientInput)) {
-                        studentId = student.id; // Get ID if name matches
-                        studentName = student.name; // Get name
-                        break; // Exit the loop once found
-                    } else if (student.id.equals(recipientInput)) {
-                        studentId = student.id; // Get ID
-                        studentName = student.name; // Get name for display
-                        break; // Exit the loop once found
+                    if (student.name.equalsIgnoreCase(recipientInput) || student.id.equals(recipientInput)) {
+                        studentId = student.id;
+                        studentName = student.name;
+                        break;
                     }
                 }
 
                 if (studentId != null) {
-                    intent.putExtra("studentId", studentId); // Send the student's ID
-                    intent.putExtra("recipient", studentName); // Send the student's name
+                    Intent intent = new Intent(ExpressSendActivity.this, SendDetailsActivity.class);
+                    intent.putExtra("amount", amountEditText.getText().toString());
+                    intent.putExtra("message", messageEditText.getText().toString());
+                    intent.putExtra("studentId", studentId);
+                    intent.putExtra("recipient", studentName);
                     startActivity(intent);
                 } else {
                     accountNotFoundTextView.setVisibility(View.VISIBLE);
@@ -93,37 +95,42 @@ public class ExpressSendActivity extends AppCompatActivity {
             }
         });
 
-        // Handle back button click
         findViewById(R.id.backButton).setOnClickListener(v -> {
             startActivity(new Intent(ExpressSendActivity.this, SendActivity.class));
             finish();
         });
 
-        // Add TextWatcher for recipient and amount fields
         recipientEditText.addTextChangedListener(new InputTextWatcher());
         amountEditText.addTextChangedListener(new InputTextWatcher());
+    }
+
+    private double parseBalance(String balanceString) {
+        String numericString = balanceString.replace("₱", "").replace(",", "").trim();
+        try {
+            return Double.parseDouble(numericString);
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
     }
 
     private boolean validateInputs() {
         boolean isRecipientFilled = !recipientEditText.getText().toString().trim().isEmpty();
         boolean isAmountFilled = !amountEditText.getText().toString().trim().isEmpty();
 
-        // Reset the error message initially
         errorTextView.setVisibility(View.GONE);
-        accountNotFoundTextView.setVisibility(View.GONE); // Hide account not found message
-        sendNextButton.setEnabled(false); // Disable button by default
+        accountNotFoundTextView.setVisibility(View.GONE);
+        sendNextButton.setEnabled(false);
 
         if (isAmountFilled) {
             try {
                 double amount = Double.parseDouble(amountEditText.getText().toString());
                 if (amount <= currentBalance) {
-                    sendNextButton.setEnabled(true); // Enable button if recipient is valid
+                    sendNextButton.setEnabled(true);
                 } else {
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("Insufficient Balance");
                 }
             } catch (NumberFormatException e) {
-                // Handle invalid number format
                 errorTextView.setVisibility(View.VISIBLE);
                 errorTextView.setText("Invalid amount");
             }

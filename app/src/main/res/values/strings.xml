@@ -1,13 +1,33 @@
 <resources>
     <string name="app_name">NUCash</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="Send_Notes">Confirmed transactions will not be refunded. Please make sure that the ID Number and Amount are correct.</string>
+    <string name="note1">Make sure that the entered amount is in numeric characters.</string>
+    <string name="note2">For Enrollment Late Payments and Installment Late Payments, Php 200.00 penalty will be charged manually by the Treasury Office.</string>
+    <string name="note3">During Enrollment Period: this payment option DOES NOT auto-enroll the student beneficiary. If you intend to auto-enroll, make sure you have registered subjects for the on-going enrollment term and assessment form has been thoroughly reviewed.</string>
+    <string name="link1">www.national-u.edu.ph</string>
+    <string name="link2">facebook.com/NationalUniversityPhilippines</string>
+    <string name="link3">twitter.com/NationalUPhil</string>
+    <string name="link4">instagram.com/NationalUPH</string>
+    <string name="phone">Phone: (02) 8712-1900</string>
+    <string name="faq1">I have a transaction concern. What do I do?</string>
+    <string name="faq2">I lost my phone or SIM with the number registered to my NUCash Account. What do I do?</string>
+    <string name="faq3">How can I pay my tuition fees in NUCash?</string>
+    <string name="View_all">View All</string>
+    <string name="brt1">Cashing In &amp; Out</string>
+    <string name="brt2">Features &amp; Services</string>
+    <string name="brt3">Safety &amp; Security</string>
+    <string name="brt4">Promos &amp; Deals</string>
+    <string name="attachment1">Upload your promissory letter and other necessary documents</string>
+    <string name="attachment2">File limit: 3</string>
+    <string name="attachment3">Single size limit: 15MB</string>
+    <string name="attachment4">Allowed file types: Pdf or image file only.</string>
+    <string name="notice">This payment option is disabled due to some validations and requirements not met by the student beneficiary. Read the system messages appearing in the page.</string>
+    <string name="warning">No assessment form yet. Generate your Assessment Form first from your Online Enrollment module to check your matriculation fees.</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

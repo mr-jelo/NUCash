@@ -13,6 +13,21 @@
         android:theme="@style/Theme.NUCash"
         tools:targetApi="31">
         <activity
+            android:name=".SignInPassActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BPReceiptActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PromissoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TuitionActivity"
+            android:exported="false" />
+        <activity
             android:name=".RequestDetailsActivity"
             android:exported="false" />
         <activity
@@ -20,9 +35,6 @@
             android:exported="false" />
         <activity
             android:name=".RequestMoneyActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SendToManyActivity"
             android:exported="false" />
         <activity
             android:name=".ExpressSendActivity"

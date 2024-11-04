@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RequestMoneyActivity extends AppCompatActivity {
@@ -17,7 +16,7 @@ public class RequestMoneyActivity extends AppCompatActivity {
     private EditText messageEditText;
     private EditText recipientEditText;
     private TextView charCountTextView;
-    private Button sendNextButton;
+    private Button requestNextButton; // Corrected variable name
     private TextView errorTextView; // Add this for error message
     private TextView accountNotFoundTextView; // New TextView for account not found message
     private double currentBalance = 1300.45; // Set your current balance here
@@ -31,12 +30,12 @@ public class RequestMoneyActivity extends AppCompatActivity {
         messageEditText = findViewById(R.id.messageEditText);
         recipientEditText = findViewById(R.id.recipientEditText);
         charCountTextView = findViewById(R.id.charCountTextView);
-        sendNextButton = findViewById(R.id.send_next);
+        requestNextButton = findViewById(R.id.request_next); // Updated variable name
         errorTextView = findViewById(R.id.errorTextView); // Initialize error TextView
         accountNotFoundTextView = findViewById(R.id.accountNotFoundTextView); // Initialize account not found TextView
 
         // Initially disable the Next button
-        sendNextButton.setEnabled(false);
+        requestNextButton.setEnabled(false);
 
         // Set up character limit for message EditText
         messageEditText.addTextChangedListener(new TextWatcher() {
@@ -56,10 +55,10 @@ public class RequestMoneyActivity extends AppCompatActivity {
             }
         });
 
-        // Handle send_next button click
-        sendNextButton.setOnClickListener(v -> {
+        // Handle request_next button click
+        requestNextButton.setOnClickListener(v -> {
             if (validateInputs()) {
-                Intent intent = new Intent(RequestMoneyActivity.this, SendDetailsActivity.class);
+                Intent intent = new Intent(RequestMoneyActivity.this, RequestDetailsActivity.class);
                 intent.putExtra("amount", amountEditText.getText().toString());
                 intent.putExtra("message", messageEditText.getText().toString());
 
@@ -91,13 +90,13 @@ public class RequestMoneyActivity extends AppCompatActivity {
             }
         });
 
-        // Handle back button click
+
         findViewById(R.id.backButton).setOnClickListener(v -> {
             startActivity(new Intent(RequestMoneyActivity.this, SendActivity.class));
             finish();
         });
 
-        // Add TextWatcher for recipient and amount fields
+
         recipientEditText.addTextChangedListener(new InputTextWatcher());
         amountEditText.addTextChangedListener(new InputTextWatcher());
     }
@@ -109,16 +108,16 @@ public class RequestMoneyActivity extends AppCompatActivity {
         // Reset the error message initially
         errorTextView.setVisibility(View.GONE);
         accountNotFoundTextView.setVisibility(View.GONE); // Hide account not found message
-        sendNextButton.setEnabled(false); // Disable button by default
+        requestNextButton.setEnabled(false); // Disable button by default
 
         if (isAmountFilled) {
             try {
                 double amount = Double.parseDouble(amountEditText.getText().toString());
-                if (amount <= currentBalance) {
-                    sendNextButton.setEnabled(true); // Enable button if recipient is valid
-                } else {
+                if (amount > currentBalance) {
                     errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText("Insufficient Balance");
+                } else {
+                    requestNextButton.setEnabled(isRecipientFilled); // Enable button if recipient is valid
                 }
             } catch (NumberFormatException e) {
                 // Handle invalid number format

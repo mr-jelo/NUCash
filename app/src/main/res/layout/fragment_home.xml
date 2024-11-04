@@ -19,6 +19,7 @@
             app:cardElevation="10dp"
             app:cardBackgroundColor="@color/yellow"
             android:layout_gravity="center">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:id="@+id/nucashTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="₱ 1300.45"
